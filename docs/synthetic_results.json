@@ -1,0 +1,26 @@
+[
+  {
+    "scenario": "Separated regions",
+    "true_count": 3,
+    "estimated_count": 3,
+    "count_error": 0
+  },
+  {
+    "scenario": "Dark regions",
+    "true_count": 3,
+    "estimated_count": 0,
+    "count_error": -3
+  },
+  {
+    "scenario": "Overexposed regions",
+    "true_count": 3,
+    "estimated_count": 0,
+    "count_error": -3
+  },
+  {
+    "scenario": "Connected regions",
+    "true_count": 3,
+    "estimated_count": 3,
+    "count_error": 0
+  }
+]
