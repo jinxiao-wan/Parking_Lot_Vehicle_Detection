@@ -8,6 +8,29 @@ The original coursework used median filtering, HSV thresholding, morphological c
 
 This repository rebuilds that pipeline with configurable parameters, a headless command-line interface, intermediate images, JSON results and count evaluation. No neural network is trained. The original `car_train.png` and `car_test.png` are not included; no real-image accuracy is claimed.
 
+## Visual walkthrough
+
+![Detection pipeline](docs/images/pipeline.svg)
+
+The figure shows actual intermediate outputs from the detector on a synthetic scene: input, foreground mask, edges and estimated count.
+
+![Threshold sensitivity](docs/images/sensitivity.svg)
+
+Using one fixed configuration, the three separated regions are counted correctly. Dark and overexposed regions are missed because they fall outside the HSV value bounds. The connected-region example is assigned two vehicles by the area heuristic, but the individual cars are not separately localized.
+
+| Synthetic scenario | True count | Estimated count | Absolute error |
+| --- | ---: | ---: | ---: |
+| Separated regions | 3 | 3 | 0 |
+| Dark regions | 3 | 0 | 3 |
+| Overexposed regions | 3 | 0 | 3 |
+| Connected regions | 3 | 3 | 0 |
+
+These controlled checks illustrate behavior and limitations; they are not a real-world benchmark. Regenerate the figures and machine-readable results with:
+
+```bash
+python visualize.py
+```
+
 ## Run
 
 Python 3.10+; CPU only, no GPU required. From the cloned repository directory:
@@ -58,20 +81,10 @@ Report mean absolute count error and exact-count fraction separately for lightin
 - Compare the baseline with a learned detector on a labelled real-image test set.
 - Extend to parking-space occupancy and temporal consistency only after defining annotations and evaluation metrics.
 
-## Relevance to autonomous parking
-
-This project develops parking perception and failure analysis, useful background for studying perception inputs to parking control (C8). Computer Vision coursework in camera calibration, homographies, RANSAC and multi-view geometry supplies complementary geometric foundations. Prediction/world models (C4) and adversarial RL testing (C2) are future directions; this baseline implements neither.
-
-## Application wording
-
-“In my Image Analysis course, I implemented a Python/OpenCV pipeline to detect and count parked vehicles using color segmentation, morphology and contour analysis. I investigated how shadows, lighting changes and vehicle orientation affected the results. My Computer Vision coursework also covered camera estimation, homographies, RANSAC and multi-view geometry. These experiences motivate my interest in robust perception and its connection to parking control.”
-
-Thesis preference order: **C8 – Neural Controller for Parking Scenarios; C4 – Object-Level Trajectory Planning Using World Models; C2 – Adaptive Stress Testing using Adversarial Reinforcement Learning.**
-
 ## References
 
 - Source: Jinxiao Wan, Image Analysis Home Exam, Task 6; accompanying presentation.
 - [OpenCV contours](https://docs.opencv.org/4.x/d4/d73/tutorial_py_contours_begin.html)
 - [OpenCV HSV thresholding](https://docs.opencv.org/4.x/da/d97/tutorial_threshold_inRange.html)
 
-This is a portfolio reconstruction with AI assistance. Review, reproduce and explain the code before presenting the extension as your own engineering work.
+This repository reconstructs the coursework baseline with AI assistance and adds reproducible visualization and evaluation tools.
